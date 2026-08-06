@@ -9,14 +9,11 @@ class Solution {
         return multiply;
     }
     public int smallestNumber(int n, int t) {
-    boolean flag =true;
-    while(flag){
+    while(true){
         if(digits(n)%t == 0){
-          flag = false;
-          break;
+          return n;
         } 
         n++;
     }
-    return n;
 }
 }
