@@ -3,10 +3,10 @@ class Solution {
     char[] ch =s.toCharArray();
     int count=0;
     int i = s.length()-1;
-    while(ch[i] == ' '){
+    while(s.charAt(i) == ' '){
         i--;
     }
-    while(i>=0 && ch[i] !=' '){
+    while(i>=0 && s.charAt(i) !=' '){
         count++;
         i--;
     }
