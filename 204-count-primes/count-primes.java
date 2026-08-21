@@ -4,6 +4,8 @@ class Solution {
     int count = 0;
     boolean[] arr = new boolean[n]; 
     Arrays.fill(arr,true);
+    arr[0] = false;
+    arr[1] = false;
     for(int i =2;i<n;i++){
         if(arr[i]){
             count++;
