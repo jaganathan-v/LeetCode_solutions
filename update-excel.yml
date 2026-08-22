@@ -1,0 +1,46 @@
+name: Update LeetCode Analytics Excel
+
+# Runs automatically every time LeetSync (or you) pushes a new solve to main.
+# Also runnable manually from the Actions tab ("Run workflow") if you ever
+# want to force a refresh without a new push.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'reports/**'          # don't re-trigger when the workflow's own commit lands
+  workflow_dispatch: {}
+
+permissions:
+  contents: write            # needed so the workflow can commit the updated Excel back
+
+jobs:
+  build-excel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo (full history needed for commit stats)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openpyxl requests
+
+      - name: Regenerate the Excel report
+        run: python scripts/build_excel.py
+
+      - name: Commit and push updated report (if it changed)
+        run: |
+          git config user.name "leetcode-analytics-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add reports/LeetCode_Analytics.xlsx scripts/tag_cache.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-update LeetCode analytics [skip ci]"
+            git push
+          fi
