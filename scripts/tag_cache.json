@@ -1,0 +1,149 @@
+{
+  "two-sum": [
+    "Array",
+    "Hash Table"
+  ],
+  "fibonacci-number": [
+    "Math",
+    "Dynamic Programming",
+    "Recursion",
+    "Memoization"
+  ],
+  "minimum-depth-of-binary-tree": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "valid-boomerang": [
+    "Array",
+    "Math",
+    "Geometry"
+  ],
+  "valid-palindrome": [
+    "Two Pointers",
+    "String"
+  ],
+  "find-resultant-array-after-removing-anagrams": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Sorting"
+  ],
+  "single-number": [
+    "Array",
+    "Bit Manipulation"
+  ],
+  "single-number-ii": [
+    "Array",
+    "Bit Manipulation"
+  ],
+  "count-primes": [
+    "Array",
+    "Math",
+    "Enumeration",
+    "Number Theory",
+    "Primality Test",
+    "Sieve Theory",
+    "Prime Number Sieve"
+  ],
+  "minimum-size-subarray-sum": [
+    "Array",
+    "Binary Search",
+    "Sliding Window",
+    "Prefix Sum"
+  ],
+  "find-greatest-common-divisor-of-array": [
+    "Array",
+    "Math",
+    "Number Theory",
+    "Euclidean Algorithm",
+    "Greatest Common Divisor"
+  ],
+  "valid-anagram": [
+    "Hash Table",
+    "String",
+    "Sorting"
+  ],
+  "prime-in-diagonal": [
+    "Array",
+    "Math",
+    "Matrix",
+    "Number Theory"
+  ],
+  "generate-fibonacci-sequence": [
+    "Uncategorized"
+  ],
+  "longest-substring-without-repeating-characters": [
+    "Hash Table",
+    "String",
+    "Sliding Window"
+  ],
+  "distribute-elements-into-two-arrays-i": [
+    "Array",
+    "Simulation"
+  ],
+  "maximum-prime-difference": [
+    "Array",
+    "Math",
+    "Number Theory",
+    "Primality Test"
+  ],
+  "smallest-divisible-digit-product-i": [
+    "Math",
+    "Enumeration"
+  ],
+  "find-the-largest-almost-missing-integer": [
+    "Array",
+    "Hash Table"
+  ],
+  "check-divisibility-by-digit-sum-and-product": [
+    "Math"
+  ],
+  "longest-fibonacci-subarray": [
+    "Array"
+  ],
+  "score-validator": [
+    "Array",
+    "String",
+    "Simulation"
+  ],
+  "diameter-of-binary-tree": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree",
+    "DP on Trees"
+  ],
+  "length-of-last-word": [
+    "String"
+  ],
+  "average-of-levels-in-binary-tree": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "maximum-average-subarray-i": [
+    "Array",
+    "Sliding Window"
+  ],
+  "valid-palindrome-ii": [
+    "Two Pointers",
+    "String",
+    "Greedy"
+  ],
+  "reverse-integer": [
+    "Math"
+  ],
+  "prime-number-of-set-bits-in-binary-representation": [
+    "Math",
+    "Bit Manipulation",
+    "Primality Test"
+  ],
+  "binary-tree-inorder-traversal": [
+    "Stack",
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree"
+  ]
+}
