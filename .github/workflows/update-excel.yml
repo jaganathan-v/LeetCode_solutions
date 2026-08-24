@@ -1,17 +1,21 @@
 name: Update LeetCode Analytics Excel
 
-# Runs automatically every time LeetSync (or you) pushes a new solve to main.
-# Also runnable manually from the Actions tab ("Run workflow") if you ever
-# want to force a refresh without a new push.
+# Runs automatically every time LeetSync pushes a new solve to main.
+# concurrency below forces runs to queue one-at-a-time instead of
+# overlapping, which is what was causing the push conflicts.
 on:
   push:
     branches: [main]
     paths-ignore:
-      - 'reports/**'          # don't re-trigger when the workflow's own commit lands
+      - 'reports/**'
   workflow_dispatch: {}
 
+concurrency:
+  group: leetcode-report-build
+  cancel-in-progress: false
+
 permissions:
-  contents: write            # needed so the workflow can commit the updated Excel back
+  contents: write
 
 jobs:
   build-excel:
@@ -45,7 +49,8 @@ jobs:
           git commit -m "Auto-update LeetCode analytics [skip ci]"
           for i in 1 2 3 4 5; do
             git pull --rebase origin main && git push && exit 0
-            echo "Push rejected, branch moved — retrying ($i)..."
+            echo "Push rejected, branch moved — cleaning up and retrying ($i)..."
+            git rebase --abort 2>/dev/null || true
             sleep 5
           done
           echo "Failed to push after retries."
