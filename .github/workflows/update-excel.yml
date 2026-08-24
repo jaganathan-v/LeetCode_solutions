@@ -40,7 +40,13 @@ jobs:
           git add reports/LeetCode_Analytics.xlsx scripts/tag_cache.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
-          else
-            git commit -m "Auto-update LeetCode analytics [skip ci]"
-            git push
+            exit 0
           fi
+          git commit -m "Auto-update LeetCode analytics [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            echo "Push rejected, branch moved — retrying ($i)..."
+            sleep 5
+          done
+          echo "Failed to push after retries."
+          exit 1
