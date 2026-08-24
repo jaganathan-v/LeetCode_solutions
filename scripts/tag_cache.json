@@ -145,5 +145,10 @@
     "Tree",
     "Depth-First Search",
     "Binary Tree"
+  ],
+  "contains-duplicate-ii": [
+    "Array",
+    "Hash Table",
+    "Sliding Window"
   ]
 }
