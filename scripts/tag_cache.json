@@ -158,5 +158,10 @@
   "remove-duplicates-from-sorted-array": [
     "Array",
     "Two Pointers"
+  ],
+  "container-with-most-water": [
+    "Array",
+    "Two Pointers",
+    "Greedy"
   ]
 }
