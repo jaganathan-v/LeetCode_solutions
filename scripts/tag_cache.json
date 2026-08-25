@@ -150,5 +150,9 @@
     "Array",
     "Hash Table",
     "Sliding Window"
+  ],
+  "move-zeroes": [
+    "Array",
+    "Two Pointers"
   ]
 }
