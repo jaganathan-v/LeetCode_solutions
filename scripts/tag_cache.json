@@ -154,5 +154,9 @@
   "move-zeroes": [
     "Array",
     "Two Pointers"
+  ],
+  "remove-duplicates-from-sorted-array": [
+    "Array",
+    "Two Pointers"
   ]
 }
