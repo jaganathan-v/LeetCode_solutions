@@ -163,5 +163,10 @@
     "Array",
     "Two Pointers",
     "Greedy"
+  ],
+  "sum-of-all-odd-length-subarrays": [
+    "Array",
+    "Math",
+    "Prefix Sum"
   ]
 }
