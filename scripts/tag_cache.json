@@ -172,5 +172,10 @@
   "corporate-flight-bookings": [
     "Array",
     "Prefix Sum"
+  ],
+  "matrix-block-sum": [
+    "Array",
+    "Matrix",
+    "Prefix Sum"
   ]
 }
