@@ -168,5 +168,9 @@
     "Array",
     "Math",
     "Prefix Sum"
+  ],
+  "corporate-flight-bookings": [
+    "Array",
+    "Prefix Sum"
   ]
 }
