@@ -177,5 +177,10 @@
     "Array",
     "Matrix",
     "Prefix Sum"
+  ],
+  "range-sum-query-immutable": [
+    "Array",
+    "Design",
+    "Prefix Sum"
   ]
 }
