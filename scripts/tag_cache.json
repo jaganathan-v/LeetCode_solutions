@@ -193,5 +193,10 @@
     "Array",
     "Hash Table",
     "Prefix Sum"
+  ],
+  "maximum-subarray": [
+    "Array",
+    "Divide and Conquer",
+    "Dynamic Programming"
   ]
 }
