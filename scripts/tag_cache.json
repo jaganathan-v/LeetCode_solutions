@@ -188,5 +188,10 @@
     "Design",
     "Matrix",
     "Prefix Sum"
+  ],
+  "subarray-sum-equals-k": [
+    "Array",
+    "Hash Table",
+    "Prefix Sum"
   ]
 }
