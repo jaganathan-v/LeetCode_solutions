@@ -198,5 +198,9 @@
     "Array",
     "Divide and Conquer",
     "Dynamic Programming"
+  ],
+  "smallest-stable-index-i": [
+    "Array",
+    "Prefix Sum"
   ]
 }
