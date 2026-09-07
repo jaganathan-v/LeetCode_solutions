@@ -206,5 +206,10 @@
   "search-in-rotated-sorted-array": [
     "Array",
     "Binary Search"
+  ],
+  "two-sum-ii-input-array-is-sorted": [
+    "Array",
+    "Two Pointers",
+    "Binary Search"
   ]
 }
