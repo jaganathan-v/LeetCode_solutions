@@ -202,5 +202,9 @@
   "smallest-stable-index-i": [
     "Array",
     "Prefix Sum"
+  ],
+  "search-in-rotated-sorted-array": [
+    "Array",
+    "Binary Search"
   ]
 }
