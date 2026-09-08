@@ -227,5 +227,10 @@
   "first-missing-positive": [
     "Array",
     "Hash Table"
+  ],
+  "merge-intervals": [
+    "Array",
+    "Sorting",
+    "Quicksort"
   ]
 }
