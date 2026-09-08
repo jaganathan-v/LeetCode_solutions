@@ -214,5 +214,9 @@
   ],
   "count-commas-in-range": [
     "Math"
+  ],
+  "find-peak-element": [
+    "Array",
+    "Binary Search"
   ]
 }
