@@ -218,5 +218,10 @@
   "find-peak-element": [
     "Array",
     "Binary Search"
+  ],
+  "find-all-duplicates-in-an-array": [
+    "Array",
+    "Hash Table",
+    "Sorting"
   ]
 }
