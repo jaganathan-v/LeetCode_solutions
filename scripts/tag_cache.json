@@ -223,5 +223,9 @@
     "Array",
     "Hash Table",
     "Sorting"
+  ],
+  "first-missing-positive": [
+    "Array",
+    "Hash Table"
   ]
 }
