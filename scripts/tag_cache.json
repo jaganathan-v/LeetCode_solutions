@@ -232,5 +232,9 @@
     "Array",
     "Sorting",
     "Quicksort"
+  ],
+  "middle-of-the-linked-list": [
+    "Linked List",
+    "Two Pointers"
   ]
 }
