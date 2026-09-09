@@ -236,5 +236,11 @@
   "middle-of-the-linked-list": [
     "Linked List",
     "Two Pointers"
+  ],
+  "linked-list-cycle": [
+    "Hash Table",
+    "Linked List",
+    "Two Pointers",
+    "Floyd's Cycle Finding Algorithm"
   ]
 }
