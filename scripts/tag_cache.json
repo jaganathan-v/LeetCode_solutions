@@ -248,5 +248,9 @@
     "Linked List",
     "Two Pointers",
     "Floyd's Cycle Finding Algorithm"
+  ],
+  "reverse-linked-list": [
+    "Linked List",
+    "Recursion"
   ]
 }
