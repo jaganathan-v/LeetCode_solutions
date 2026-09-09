@@ -252,5 +252,13 @@
   "reverse-linked-list": [
     "Linked List",
     "Recursion"
+  ],
+  "find-the-duplicate-number": [
+    "Array",
+    "Two Pointers",
+    "Binary Search",
+    "Bit Manipulation",
+    "Pigeonhole Principle",
+    "Floyd's Cycle Finding Algorithm"
   ]
 }
