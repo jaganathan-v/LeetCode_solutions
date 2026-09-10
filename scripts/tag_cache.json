@@ -260,5 +260,8 @@
     "Bit Manipulation",
     "Pigeonhole Principle",
     "Floyd's Cycle Finding Algorithm"
+  ],
+  "reverse-linked-list-ii": [
+    "Linked List"
   ]
 }
