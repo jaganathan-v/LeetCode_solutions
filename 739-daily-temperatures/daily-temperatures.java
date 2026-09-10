@@ -4,16 +4,14 @@ class Solution {
 		 int[] result = new int[temperatures.length];
 		 for(int i=0;i<temperatures.length;i++) {
 			 
-			 if(stack.isEmpty()) {
-				 stack.push(i);
-			 }else{
+			
 	        while(!(stack.isEmpty()) && temperatures[i]>temperatures[stack.peek()]) {
                  int value = i - stack.peek();
 				 result[stack.peek()] = value;
 				stack.pop();
 			 }
 			 stack.push(i);
-		     } 
+		     
          }
     return result;
     }
