@@ -268,5 +268,10 @@
     "Array",
     "Stack",
     "Monotonic Stack"
+  ],
+  "next-greater-element-ii": [
+    "Array",
+    "Stack",
+    "Monotonic Stack"
   ]
 }
