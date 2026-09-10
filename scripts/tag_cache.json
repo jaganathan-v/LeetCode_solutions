@@ -273,5 +273,10 @@
     "Array",
     "Stack",
     "Monotonic Stack"
+  ],
+  "daily-temperatures": [
+    "Array",
+    "Stack",
+    "Monotonic Stack"
   ]
 }
