@@ -263,5 +263,10 @@
   ],
   "reverse-linked-list-ii": [
     "Linked List"
+  ],
+  "final-prices-with-a-special-discount-in-a-shop": [
+    "Array",
+    "Stack",
+    "Monotonic Stack"
   ]
 }
