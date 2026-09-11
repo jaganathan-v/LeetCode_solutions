@@ -278,5 +278,13 @@
     "Array",
     "Stack",
     "Monotonic Stack"
+  ],
+  "sliding-window-maximum": [
+    "Array",
+    "Queue",
+    "Sliding Window",
+    "Heap (Priority Queue)",
+    "Monotonic Queue",
+    "Range Minimum/Maximum Query"
   ]
 }
