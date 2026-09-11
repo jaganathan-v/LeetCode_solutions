@@ -1,6 +1,10 @@
 name: Update LeetCode Analytics Excel
 
-# Runs automatically every time LeetSync pushes a new solve to main.
+# Two ways this runs:
+#  1. "push"     — instantly, whenever LeetSync pushes a new LeetCode solve.
+#  2. "schedule" — once a day, to pick up any new GeeksforGeeks solves
+#     (GFG has no push-based sync tool, so this is the closest thing to
+#     "automatic" for that platform — expect up to a ~1 day delay there).
 # concurrency queues overlapping runs instead of letting them race.
 # On a push conflict, we don't try to git-merge the binary Excel file
 # (that always fails) — we discard the stale commit, resync to the
@@ -10,6 +14,8 @@ on:
     branches: [main]
     paths-ignore:
       - 'reports/**'
+  schedule:
+    - cron: '30 2 * * *'   # ~8:00 AM IST daily — edit if you want a different time
   workflow_dispatch: {}
 
 concurrency:
@@ -45,12 +51,12 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
 
           commit_and_push() {
-            git add reports/LeetCode_Analytics.xlsx scripts/tag_cache.json
+            git add reports/LeetCode_Analytics.xlsx scripts/tag_cache.json scripts/gfg_seen.json
             if git diff --cached --quiet; then
               echo "No changes to commit."
               return 0
             fi
-            git commit -m "Auto-update LeetCode analytics [skip ci]"
+            git commit -m "Auto-update LeetCode/GFG analytics [skip ci]"
             git push
           }
 
