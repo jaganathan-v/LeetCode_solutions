@@ -29,6 +29,19 @@ OUTPUT_PATH = os.path.join(REPO_ROOT, "reports", "LeetCode_Analytics.xlsx")
 CACHE_PATH = os.path.join(REPO_ROOT, "scripts", "tag_cache.json")
 IGNORE_DIRS = {".git", ".github", "reports", "scripts", "node_modules"}
 
+# ============================================================================
+# Your GeeksforGeeks profile username (from your profile URL:
+# https://www.geeksforgeeks.org/profile/jaganat6ryz )
+# ============================================================================
+GFG_USERNAME = "jaganat6ryz"
+
+GFG_SEEN_CACHE_PATH = os.path.join(REPO_ROOT, "scripts", "gfg_seen.json")
+GFG_DIFFICULTY_ORDER = ["school", "basic", "easy", "medium", "hard"]
+GFG_TO_LOW_MED_HIGH = {
+    "school": "Low", "basic": "Low", "easy": "Low",
+    "medium": "Medium", "hard": "High",
+}
+
 # Priority order used to pick a single "Topic" out of LeetCode's tag list.
 # Whichever tag appears first in this list wins; everything else becomes Subtopic.
 TOPIC_PRIORITY = [
@@ -218,6 +231,121 @@ def collect_records():
 
 
 # ----------------------------------------------------------------------------
+# 2b. GeeksforGeeks — no official API, so this uses a community lookup
+#     service. Wrapped so any failure here NEVER breaks the LeetCode sheets.
+# ----------------------------------------------------------------------------
+def load_gfg_seen():
+    if os.path.exists(GFG_SEEN_CACHE_PATH):
+        with open(GFG_SEEN_CACHE_PATH) as f:
+            return json.load(f)
+    return {}
+
+
+def save_gfg_seen(seen):
+    with open(GFG_SEEN_CACHE_PATH, "w") as f:
+        json.dump(seen, f, indent=2)
+
+
+def fetch_gfg_profile(username):
+    """
+    Pulls solved-problem data from a community-maintained GFG lookup
+    service (not an official API — GFG doesn't publish one). Returns a
+    dict shaped like:
+      { "school": [{"title":..., "url":...}, ...], "basic": [...],
+        "easy": [...], "medium": [...], "hard": [...] }
+    Returns None on any failure so the caller can skip the GFG sheets
+    gracefully instead of crashing the whole run.
+    """
+    try:
+        resp = requests.get(
+            f"https://geeks-for-geeks-api.vercel.app/{username}",
+            headers={"User-Agent": "Mozilla/5.0 (analytics-bot)"},
+            timeout=15,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        stats = data.get("solvedStats", {})
+        out = {}
+        for level in GFG_DIFFICULTY_ORDER:
+            entries = stats.get(level, {}).get("questions", [])
+            out[level] = [
+                {"title": q.get("question"), "url": q.get("questionUrl")}
+                for q in entries if q.get("question")
+            ]
+        return out
+    except Exception as e:
+        print(f"  [warn] GFG profile fetch failed for '{username}': {e}")
+        print("  [warn] This is expected if GFG changed their site or the "
+              "lookup service is down — GFG sheets will just be skipped this run.")
+        return None
+
+
+def fetch_gfg_company_tags(problem_url):
+    """
+    Best-effort scrape of a single GFG problem page for its 'Company Tags'
+    section. This is the least reliable part of the whole pipeline (GFG's
+    page structure can change any time), so failures here are silent and
+    just leave the company column blank for that problem.
+    Only called once per problem ever (cached), not on every run.
+    """
+    try:
+        resp = requests.get(problem_url, headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
+        resp.raise_for_status()
+        html = resp.text
+        m = re.search(r'"company_tags"\s*:\s*\[([^\]]*)\]', html)
+        if not m:
+            return []
+        tags = re.findall(r'"([^"]+)"', m.group(1))
+        return tags
+    except Exception:
+        return []
+
+
+def collect_gfg_records():
+    """Returns a flat list of GFG problem records, or [] if the fetch fails."""
+    if not GFG_USERNAME or GFG_USERNAME == "your-gfg-username-here":
+        print("  [info] GFG_USERNAME not set — skipping GFG sheets.")
+        return []
+
+    profile = fetch_gfg_profile(GFG_USERNAME)
+    if profile is None:
+        return []
+
+    seen = load_gfg_seen()
+    today = datetime.now().strftime("%Y-%m-%d")
+    records = []
+
+    for level in GFG_DIFFICULTY_ORDER:
+        for q in profile.get(level, []):
+            title = q["title"]
+            url = q.get("url") or ""
+            key = title.lower().strip()
+
+            if key not in seen:
+                seen[key] = {"first_detected": today, "companies": None}
+
+            # Only scrape company tags once per problem, ever — keeps this
+            # from hammering GFG on every single daily run.
+            if seen[key]["companies"] is None and url:
+                seen[key]["companies"] = fetch_gfg_company_tags(url)
+                time.sleep(0.5)  # be polite
+
+            companies = seen[key].get("companies") or []
+            records.append({
+                "title": title,
+                "url": url,
+                "difficulty": level.capitalize(),
+                "level": GFG_TO_LOW_MED_HIGH[level],
+                "companies": companies,
+                "first_detected": seen[key]["first_detected"],
+            })
+
+    save_gfg_seen(seen)
+    print(f"  [info] GFG: found {len(records)} solved problems for '{GFG_USERNAME}'.")
+    return records
+
+
+# ----------------------------------------------------------------------------
 # 3. Build the workbook (same structure as the manual version)
 # ----------------------------------------------------------------------------
 NAVY, NAVY_DARK, GOLD, GOLD_LIGHT = "1B2A4A", "0F1B33", "C9A24B", "F4E9CE"
@@ -243,7 +371,8 @@ center = Alignment(horizontal="center", vertical="center", wrap_text=True)
 left = Alignment(horizontal="left", vertical="center", wrap_text=True)
 
 
-def build_workbook(records):
+def build_workbook(records, gfg_records=None):
+    gfg_records = gfg_records or []
     records = [r for r in records if r["title"]]
     records.sort(key=lambda r: (r["topic"], r["subtopic"],
                                  {"Low": 0, "Medium": 1, "High": 2}.get(r["level"], 3),
@@ -482,14 +611,136 @@ def build_workbook(records):
                 c.alignment = center if j != 2 else left
         r += 1
 
+    # ---- Sheet 5: GeeksforGeeks ----
+    if gfg_records:
+        ws5 = wb.create_sheet("GeeksforGeeks")
+        ws5.sheet_view.showGridLines = False
+        cols5 = [("#", 4), ("Problem", 42), ("Difficulty", 12), ("Companies Asked", 30),
+                 ("First Detected", 14), ("Link", 8)]
+        for i, (h, w) in enumerate(cols5, start=1):
+            ws5.column_dimensions[get_column_letter(i)].width = w
+        ws5.merge_cells("A1:F2")
+        ws5["A1"] = "GEEKSFORGEEKS — SOLVED PROBLEMS"
+        ws5["A1"].font = Font(name=FONT_NAME, size=16, bold=True, color=WHITE)
+        ws5["A1"].fill = topic_fill
+        ws5["A1"].alignment = Alignment(horizontal="left", vertical="center", indent=2)
+        for col in range(1, 7):
+            ws5.cell(row=1, column=col).fill = topic_fill
+            ws5.cell(row=2, column=col).fill = topic_fill
+        ws5.merge_cells("A3:F3")
+        ws5["A3"] = ("  Note: GFG has no official public API, so this sheet comes from an "
+                     "unofficial lookup and may occasionally go blank if GFG changes their site.")
+        ws5["A3"].font = Font(name=FONT_NAME, size=9, italic=True, color="666666")
+        hdr5 = 5
+        for i, (h, w) in enumerate(cols5, start=1):
+            c = ws5.cell(row=hdr5, column=i, value=h)
+            c.font, c.fill, c.alignment, c.border = header_font, header_fill, center, box
+        ws5.freeze_panes = f"A{hdr5 + 1}"
+
+        gfg_sorted = sorted(gfg_records, key=lambda x: (GFG_DIFFICULTY_ORDER.index(x["difficulty"].lower()), x["title"]))
+        company_counter = defaultdict(int)
+        r = hdr5 + 1
+        for i, rec in enumerate(gfg_sorted):
+            companies_str = ", ".join(rec["companies"]) if rec["companies"] else ""
+            for c_name in rec["companies"]:
+                company_counter[c_name] += 1
+            vals = [i + 1, rec["title"], rec["difficulty"], companies_str, rec["first_detected"], "Open"]
+            fill = white_fill if i % 2 == 0 else grey_fill
+            for j, v in enumerate(vals, start=1):
+                c = ws5.cell(row=r, column=j, value=v)
+                c.font, c.fill, c.border = normal_font, fill, box
+                c.alignment = left if j in (2, 4) else center
+            if rec["url"]:
+                lc = ws5.cell(row=r, column=6, value="Open")
+                lc.hyperlink = rec["url"]
+                lc.font = Font(name=FONT_NAME, size=10, color="1155CC", underline="single")
+            r += 1
+
+        # ---- Sheet 6: Top Companies (GFG) ----
+        ws6 = wb.create_sheet("Top Companies (GFG)")
+        ws6.sheet_view.showGridLines = False
+        ws6.column_dimensions["A"].width = 30
+        ws6.column_dimensions["B"].width = 18
+        ws6.merge_cells("A1:B2")
+        ws6["A1"] = "TOP COMPANIES — GFG"
+        ws6["A1"].font = Font(name=FONT_NAME, size=16, bold=True, color=WHITE)
+        ws6["A1"].fill = topic_fill
+        ws6["A1"].alignment = Alignment(horizontal="left", vertical="center", indent=2)
+        for col in range(1, 3):
+            ws6.cell(row=1, column=col).fill = topic_fill
+            ws6.cell(row=2, column=col).fill = topic_fill
+        hdr6 = 4
+        for i, h in enumerate(["Company", "Problems Solved (Asked by them)"], start=1):
+            c = ws6.cell(row=hdr6, column=i, value=h)
+            c.font, c.fill, c.alignment, c.border = header_font, header_fill, center, box
+        r = hdr6 + 1
+        if company_counter:
+            for i, (company, count) in enumerate(sorted(company_counter.items(), key=lambda x: -x[1])):
+                fill = white_fill if i % 2 == 0 else grey_fill
+                for j, v in enumerate([company, count], start=1):
+                    c = ws6.cell(row=r, column=j, value=v)
+                    c.font, c.fill, c.border = normal_font, fill, box
+                    c.alignment = left if j == 1 else center
+                r += 1
+        else:
+            ws6.cell(row=r, column=1, value="No company-tag data available yet.").font = normal_font
+
+    # ---- Sheet 7: Cross-Platform Summary ----
+    ws7 = wb.create_sheet("Cross-Platform Summary")
+    ws7.sheet_view.showGridLines = False
+    cols7 = [("Platform", 18), ("Low", 10), ("Medium", 10), ("High", 10), ("Total Solved", 14)]
+    for i, (h, w) in enumerate(cols7, start=1):
+        ws7.column_dimensions[get_column_letter(i)].width = w
+    ws7.merge_cells("A1:E2")
+    ws7["A1"] = "CROSS-PLATFORM SUMMARY"
+    ws7["A1"].font = Font(name=FONT_NAME, size=16, bold=True, color=WHITE)
+    ws7["A1"].fill = topic_fill
+    ws7["A1"].alignment = Alignment(horizontal="left", vertical="center", indent=2)
+    for col in range(1, 6):
+        ws7.cell(row=1, column=col).fill = topic_fill
+        ws7.cell(row=2, column=col).fill = topic_fill
+    hdr7 = 4
+    for i, (h, w) in enumerate(cols7, start=1):
+        c = ws7.cell(row=hdr7, column=i, value=h)
+        c.font, c.fill, c.alignment, c.border = header_font, header_fill, center, box
+
+    platforms = {
+        "LeetCode": records,
+        "GeeksforGeeks": gfg_records,
+    }
+    r = hdr7 + 1
+    tot_low = tot_med = tot_high = 0
+    for i, (platform, recs) in enumerate(platforms.items()):
+        low = sum(1 for x in recs if x["level"] == "Low")
+        med = sum(1 for x in recs if x["level"] == "Medium")
+        high = sum(1 for x in recs if x["level"] == "High")
+        tot_low += low; tot_med += med; tot_high += high
+        vals = [platform, low, med, high, len(recs)]
+        fill = white_fill if i % 2 == 0 else grey_fill
+        for j, v in enumerate(vals, start=1):
+            c = ws7.cell(row=r, column=j, value=v)
+            c.font, c.fill, c.border = normal_font, fill, box
+            c.alignment = left if j == 1 else center
+        r += 1
+    vals = ["COMBINED TOTAL", tot_low, tot_med, tot_high, tot_low + tot_med + tot_high]
+    for j, v in enumerate(vals, start=1):
+        c = ws7.cell(row=r, column=j, value=v)
+        c.font = Font(name=FONT_NAME, size=11, bold=True, color=WHITE)
+        c.fill, c.border = total_fill, box
+        c.alignment = left if j == 1 else center
+
     return wb
 
 
 def main():
     print("Scanning repo and fetching official LeetCode tags...")
     records = collect_records()
-    print(f"Found {len(records)} solved problems.")
-    wb = build_workbook(records)
+    print(f"Found {len(records)} LeetCode solved problems.")
+
+    print("Fetching GeeksforGeeks data...")
+    gfg_records = collect_gfg_records()
+
+    wb = build_workbook(records, gfg_records)
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     wb.save(OUTPUT_PATH)
     print(f"Saved {OUTPUT_PATH}")
