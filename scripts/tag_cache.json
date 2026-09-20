@@ -286,5 +286,9 @@
     "Heap (Priority Queue)",
     "Monotonic Queue",
     "Range Minimum/Maximum Query"
+  ],
+  "reverse-degree-of-a-string": [
+    "String",
+    "Simulation"
   ]
 }
