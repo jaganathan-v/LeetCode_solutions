@@ -290,5 +290,12 @@
   "reverse-degree-of-a-string": [
     "String",
     "Simulation"
+  ],
+  "merge-k-sorted-lists": [
+    "Linked List",
+    "Divide and Conquer",
+    "Heap (Priority Queue)",
+    "Merge Sort",
+    "Tournament Sort"
   ]
 }
