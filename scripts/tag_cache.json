@@ -303,5 +303,9 @@
     "Breadth-First Search",
     "Union-Find",
     "Graph Theory"
+  ],
+  "best-time-to-buy-and-sell-stock": [
+    "Array",
+    "Dynamic Programming"
   ]
 }
