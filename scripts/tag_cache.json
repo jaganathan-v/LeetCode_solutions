@@ -297,5 +297,11 @@
     "Heap (Priority Queue)",
     "Merge Sort",
     "Tournament Sort"
+  ],
+  "redundant-connection": [
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Union-Find",
+    "Graph Theory"
   ]
 }
