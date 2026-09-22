@@ -307,5 +307,11 @@
   "best-time-to-buy-and-sell-stock": [
     "Array",
     "Dynamic Programming"
+  ],
+  "number-of-provinces": [
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Union-Find",
+    "Graph Theory"
   ]
 }
