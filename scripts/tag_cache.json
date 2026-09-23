@@ -326,5 +326,9 @@
     "Breadth-First Search",
     "Graph Theory",
     "Topological Sort"
+  ],
+  "reverse-nodes-in-k-group": [
+    "Linked List",
+    "Recursion"
   ]
 }
