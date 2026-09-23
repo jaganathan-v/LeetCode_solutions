@@ -342,5 +342,13 @@
     "Stack",
     "Monotonic Stack",
     "Range Minimum/Maximum Query"
+  ],
+  "range-sum-query-mutable": [
+    "Array",
+    "Divide and Conquer",
+    "Design",
+    "Binary Indexed Tree",
+    "Segment Tree",
+    "Sqrt Decomposition"
   ]
 }
