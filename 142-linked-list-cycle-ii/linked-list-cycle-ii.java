@@ -12,27 +12,27 @@
 public class Solution {
     public ListNode detectCycle(ListNode head) {
 
-   ListNode slowPointer = head;
-   ListNode fastPointer = head;
-   boolean found = false;
-   while(fastPointer != null && fastPointer.next != null){
-      if(!found){
-        slowPointer = slowPointer.next;
-        fastPointer = fastPointer.next.next;
-       }else{
-        slowPointer = slowPointer.next;
-        fastPointer = fastPointer.next;
-       }
-    if(slowPointer == fastPointer && !found){
-            slowPointer = head;
-                found = true;  
-    }
-    if(slowPointer == fastPointer && found){
-              return slowPointer;
+//    ListNode slowPointer = head;
+//    ListNode fastPointer = head;
+//    boolean found = false;
+//    while(fastPointer != null && fastPointer.next != null){
+//       if(!found){
+//         slowPointer = slowPointer.next;
+//         fastPointer = fastPointer.next.next;
+//        }else{
+//         slowPointer = slowPointer.next;
+//         fastPointer = fastPointer.next;
+//        }
+//     if(slowPointer == fastPointer && !found){
+//             slowPointer = head;
+//                 found = true;  
+//     }
+//     if(slowPointer == fastPointer && found){
+//               return slowPointer;
                 
-    }
-   }
-    return null;
+//     }
+//    }
+//     return null;
     // if(head == null){
     //     return head;
     // }
@@ -45,6 +45,23 @@ public class Solution {
     //     hs.add(temp);
     //     temp = temp.next;
     // }
-    // return null;     
+    // return null;  
+
+    ListNode slow = head;
+    ListNode fast = head;
+
+    while(fast != null && fast.next != null){
+        slow = slow.next;
+        fast = fast.next.next;
+        if(slow == fast){
+            fast = head;
+            while(fast != slow){
+                slow = slow.next;
+                fast = fast.next;
+            }
+            return fast;
+        }
+    }  
+    return null; 
     }
 }
