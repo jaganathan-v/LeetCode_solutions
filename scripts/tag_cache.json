@@ -330,5 +330,11 @@
   "reverse-nodes-in-k-group": [
     "Linked List",
     "Recursion"
+  ],
+  "next-greater-element-i": [
+    "Array",
+    "Hash Table",
+    "Stack",
+    "Monotonic Stack"
   ]
 }
