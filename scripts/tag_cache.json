@@ -320,5 +320,11 @@
     "Graph Theory",
     "Topological Sort",
     "Directed Acyclic Graph"
+  ],
+  "course-schedule-ii": [
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Graph Theory",
+    "Topological Sort"
   ]
 }
