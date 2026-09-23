@@ -10,43 +10,57 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-    ListNode current = null;
-    ListNode prev = null;
-    ListNode Next =null;
-    ListNode beforeLeft = null;
-    ListNode before = null;
-    ListNode temp = head;
-    ListNode leftNode = current;
-    int pos = 1;
+    // ListNode current = null;
+    // ListNode prev = null;
+    // ListNode Next =null;
+    // ListNode beforeLeft = null;
+    // ListNode before = null;
+    // ListNode temp = head;
+    // ListNode leftNode = current;
+    // int pos = 1;
 
-    while(temp != null){
-        if(pos == left){
-            current = temp;
-            Next = temp.next;
-            leftNode  = current;
-            beforeLeft = before;
-            prev = before;
-        }
-        before = temp;
-        temp = temp.next;
-        pos++;
-    }
+    // while(temp != null){
+    //     if(pos == left){
+    //         current = temp;
+    //         Next = temp.next;
+    //         leftNode  = current;
+    //         beforeLeft = before;
+    //         prev = before;
+    //     }
+    //     before = temp;
+    //     temp = temp.next;
+    //     pos++;
+    // }
     
-    int count = right - left +1;
-    while(count>0){
-        Next = current.next;
-        current.next = prev;
-        prev = current;
-        current = Next;
-        count--;
-    }
+    // int count = right - left +1;
+    // while(count>0){
+    //     Next = current.next;
+    //     current.next = prev;
+    //     prev = current;
+    //     current = Next;
+    //     count--;
+    // }
 
-    if(beforeLeft == null){
-        head = prev;
-    }else{
-        beforeLeft.next = prev;
-    }
-    leftNode.next = current; 
-    return head;
+    // if(beforeLeft == null){
+    //     head = prev;
+    // }else{
+    //     beforeLeft.next = prev;
+    // }
+    // leftNode.next = current; 
+    // return head;
+   ListNode temp = new ListNode(0);
+   temp.next = head;
+   ListNode prev = temp;
+   for(int i=1;i<left;i++){
+    prev = prev.next;
+   }
+   ListNode curr = prev.next;
+   for(int i=0;i<right - left;i++){
+    ListNode Next = curr.next;
+    curr.next = Next.next;
+    Next.next = prev.next;
+    prev.next = Next;
+   }
+   return temp.next;
     }
 }
