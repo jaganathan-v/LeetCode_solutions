@@ -336,5 +336,11 @@
     "Hash Table",
     "Stack",
     "Monotonic Stack"
+  ],
+  "largest-rectangle-in-histogram": [
+    "Array",
+    "Stack",
+    "Monotonic Stack",
+    "Range Minimum/Maximum Query"
   ]
 }
