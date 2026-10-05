@@ -350,5 +350,9 @@
     "Binary Indexed Tree",
     "Segment Tree",
     "Sqrt Decomposition"
+  ],
+  "smallest-index-with-digit-sum-equal-to-index": [
+    "Array",
+    "Math"
   ]
 }
