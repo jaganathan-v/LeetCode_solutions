@@ -358,5 +358,13 @@
   "sum-of-squares-of-special-elements": [
     "Array",
     "Enumeration"
+  ],
+  "majority-element": [
+    "Array",
+    "Hash Table",
+    "Divide and Conquer",
+    "Sorting",
+    "Counting",
+    "Boyer\u2013Moore Majority Vote Algorithm"
   ]
 }
