@@ -366,5 +366,10 @@
     "Sorting",
     "Counting",
     "Boyer\u2013Moore Majority Vote Algorithm"
+  ],
+  "unique-paths-ii": [
+    "Array",
+    "Dynamic Programming",
+    "Matrix"
   ]
 }
