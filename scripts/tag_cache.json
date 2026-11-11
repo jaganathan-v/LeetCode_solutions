@@ -371,5 +371,9 @@
     "Array",
     "Dynamic Programming",
     "Matrix"
+  ],
+  "product-of-array-except-self": [
+    "Array",
+    "Prefix Sum"
   ]
 }
