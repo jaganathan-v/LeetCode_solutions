@@ -375,5 +375,8 @@
   "product-of-array-except-self": [
     "Array",
     "Prefix Sum"
+  ],
+  "longest-strictly-increasing-or-strictly-decreasing-subarray": [
+    "Array"
   ]
 }
