@@ -378,5 +378,9 @@
   ],
   "longest-strictly-increasing-or-strictly-decreasing-subarray": [
     "Array"
+  ],
+  "restore-finishing-order": [
+    "Array",
+    "Hash Table"
   ]
 }
