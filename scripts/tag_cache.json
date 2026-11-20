@@ -382,5 +382,8 @@
   "restore-finishing-order": [
     "Array",
     "Hash Table"
+  ],
+  "string-to-integer-atoi": [
+    "String"
   ]
 }
