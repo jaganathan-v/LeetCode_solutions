@@ -390,5 +390,10 @@
     "String",
     "Dynamic Programming",
     "Longest Common Subsequence"
+  ],
+  "climbing-stairs": [
+    "Math",
+    "Dynamic Programming",
+    "Memoization"
   ]
 }
