@@ -395,5 +395,9 @@
     "Math",
     "Dynamic Programming",
     "Memoization"
+  ],
+  "counting-bits": [
+    "Dynamic Programming",
+    "Bit Manipulation"
   ]
 }
