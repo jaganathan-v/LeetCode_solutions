@@ -385,5 +385,10 @@
   ],
   "string-to-integer-atoi": [
     "String"
+  ],
+  "longest-common-subsequence": [
+    "String",
+    "Dynamic Programming",
+    "Longest Common Subsequence"
   ]
 }
