@@ -399,5 +399,8 @@
   "counting-bits": [
     "Dynamic Programming",
     "Bit Manipulation"
+  ],
+  "check-if-all-as-appears-before-all-bs": [
+    "String"
   ]
 }
