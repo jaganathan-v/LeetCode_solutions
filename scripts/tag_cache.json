@@ -402,5 +402,8 @@
   ],
   "check-if-all-as-appears-before-all-bs": [
     "String"
+  ],
+  "convert-the-temperature": [
+    "Math"
   ]
 }
