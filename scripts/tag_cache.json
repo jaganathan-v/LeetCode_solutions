@@ -405,5 +405,9 @@
   ],
   "convert-the-temperature": [
     "Math"
+  ],
+  "find-minimum-in-rotated-sorted-array": [
+    "Array",
+    "Binary Search"
   ]
 }
