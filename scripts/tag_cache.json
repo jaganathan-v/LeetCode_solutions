@@ -409,5 +409,10 @@
   "find-minimum-in-rotated-sorted-array": [
     "Array",
     "Binary Search"
+  ],
+  "unique-paths": [
+    "Math",
+    "Dynamic Programming",
+    "Combinatorics"
   ]
 }
