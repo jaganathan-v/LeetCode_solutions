@@ -53,7 +53,8 @@ class Solution {
             temp.next = new ListNode(list1.val);
             list1 = list1.next;
             temp = temp.next;
-        }else if((list1 != null && list2 != null) && ( list2.val <= list1.val)){
+        }
+        if((list1 != null && list2 != null) && ( list2.val <= list1.val)){
             temp.next = new ListNode(list2.val);
             list2 = list2.next;
             temp = temp.next;
