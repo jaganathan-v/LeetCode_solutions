@@ -418,5 +418,9 @@
   "stone-removal-game": [
     "Math",
     "Simulation"
+  ],
+  "merge-two-sorted-lists": [
+    "Linked List",
+    "Recursion"
   ]
 }
